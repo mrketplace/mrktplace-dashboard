@@ -18,7 +18,7 @@ export default class AuthMiddleware {
       window.location.replace("/home");
   }
   // Make a view private for unauthenticated users
-  static privateRoute(component: JSX.Element): JSX.Element {
+  static privateRoute(component: JSX.Element) {
     if (User.authUser === null) return <LoginView />;
     console.log('User logged in...');
     return component;
