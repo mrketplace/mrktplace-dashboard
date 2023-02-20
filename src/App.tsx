@@ -1,30 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import HomeView from './views/HomeView';
 import './App.css';
+import Header from './components/base/Header';
+import Sidebar from './components/base/Sidebar';
+import UpdateBtn from './components/UpdateBtn';
+import { Outlet } from 'react-router-dom';
+import Footer from './components/base/Footer';
 
-function App() {
+export default function App(): JSX.Element {
   return (
-    <HomeView/>
-  );
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* <!-- Layout wrapper --> */}
+      <div className="layout-wrapper layout-content-navbar">
+        <div className="layout-container">
+          {/* <!-- Menu --> */}
+          <Sidebar />
+          {/* <!-- / Menu --> */}
+          {/* <!-- Layout container --> */}
+          <div className="layout-page">
+            {/* <!-- Navbar --> */}
+            <Header />
+            {/* <!-- / Navbar --> */}
+            {/* <!-- Content wrapper --> */}
+            <div className="content-wrapper">
+              {/* <!-- Content --> */}
+
+              <Outlet />
+              {/* <!-- / Content --> */}
+
+              {/* <!-- Footer --> */}
+              <Footer />
+              {/* <!-- / Footer --> */}
+
+              <div className="content-backdrop fade"></div>
+            </div>
+            {/* <!-- Content wrapper --> */}
+          </div>
+          {/* <!-- / Layout page --> */}
+        </div>
+        {/* <!-- Overlay --> */}
+        <div className="layout-overlay layout-menu-toggle"></div>
+      </div>
+      {/* <!-- / Layout wrapper --> */}
+      {/* <UpdateBtn /> */}
     </div>
   );
 }
 
-export default App;

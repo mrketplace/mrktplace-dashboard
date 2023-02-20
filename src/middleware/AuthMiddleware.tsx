@@ -1,5 +1,5 @@
 import LoginView from "../views/auth/LoginView";
-import User from "E:/Projekts/TheMarketPlace/marketplace-mobile-client/src/models/User";
+import User from "../mrktplace-models/User";
 
 export default class AuthMiddleware {
   // Methods
@@ -18,8 +18,9 @@ export default class AuthMiddleware {
       window.location.replace("/home");
   }
   // Make a view private for unauthenticated users
-  static makePrivateRoute(component: JSX.Element): JSX.Element {
+  static privateRoute(component: JSX.Element): JSX.Element {
     if (User.authUser === null) return <LoginView />;
+    console.log('User logged in...');
     return component;
   }
 }

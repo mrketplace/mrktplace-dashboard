@@ -20,8 +20,8 @@ root.render(
         <Route path="/login" element={<LoginView />} />
         {/* <Route path="/reset-password" element={<ResetPasswordView />} /> */}
         {/* Dashboard routes */}
-        <Route path="/" element={AuthMiddleware.makePrivateRoute(<App />)}>
-          <Route path="/" element={AuthMiddleware.makePrivateRoute(<HomeView />)} />
+        <Route path="/" element={AuthMiddleware.privateRoute(<App />)}>
+          <Route path="/" element={AuthMiddleware.privateRoute(<HomeView />)} />
         </Route>
         {/* No match route */}
         <Route path="*" element={<NoMatchView />} />
