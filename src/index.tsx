@@ -8,6 +8,10 @@ import NoMatchView from './views/NoMatchView';
 import HomeView from './views/HomeView';
 import LoginView from './views/auth/LoginView';
 import AuthMiddleware from './middleware/AuthMiddleware';
+import User from './mrktplace-models/User';
+
+console.log(User.authUser); //! debug
+// User.authUser = null; //! debug
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

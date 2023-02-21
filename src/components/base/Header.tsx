@@ -1,4 +1,49 @@
+import User from "../../mrktplace-models/User";
+import api from '../../mrktplace-models/api.json';
+import { useState } from "react";
+import CircularLoader from "../CircularLoader";
+
 export default function Header(): JSX.Element {
+    // Properties
+    const [logoutBtnPressed, setLogoutBtnPressed] = useState(false);
+    // Methods
+    const logout = async (event: any) => { // Send logout request to server
+        // Configs
+        event.preventDefault();
+        setLogoutBtnPressed(true);
+        const url = api.serverIp + api.auth.logout;
+        // Send request
+        await fetch(
+            url,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + User.authUser!.token,
+                },
+            })
+            .then(response => response.json())
+            .then(jsonData => {
+                // Check the response
+                console.log(jsonData); //! debug
+                if (jsonData.state === "SUCCESS") {
+                    // Remove authenticated user datas
+                    // User.authUser!.logout();
+                    User.authUser = null;
+                    localStorage.removeItem("authUser");
+                    window.location.replace('/login');
+                    console.log(jsonData); //! debug
+                } else {
+                    console.log("JSON ERROR"); //! debug
+                }
+            }).catch(error => {
+                // Show error alert
+                console.log("API ERROR -> " + error); //! debug
+            });
+        // Enable logout button
+        setLogoutBtnPressed(false);
+    }
+    // Component rendering
     return (
         <nav
             className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
@@ -55,8 +100,8 @@ export default function Header(): JSX.Element {
                                             </div>
                                         </div>
                                         <div className="flex-grow-1">
-                                            <span className="fw-semibold d-block">John Doe</span>
-                                            <small className="text-muted">Admin</small>
+                                            <span className="fw-semibold d-block">{User.authUser!.firstname + " " + User.authUser!.lastname}</span>
+                                            <small className="text-muted">{User.authUser!.role}</small>
                                         </div>
                                     </div>
                                 </a>
@@ -67,20 +112,20 @@ export default function Header(): JSX.Element {
                             <li>
                                 <a className="dropdown-item" href="#">
                                     <i className="bx bx-user me-2"></i>
-                                    <span className="align-middle">My Profile</span>
+                                    <span className="align-middle">Mon Profil</span>
                                 </a>
                             </li>
                             <li>
                                 <a className="dropdown-item" href="#">
                                     <i className="bx bx-cog me-2"></i>
-                                    <span className="align-middle">Settings</span>
+                                    <span className="align-middle">Paramètres</span>
                                 </a>
                             </li>
                             <li>
                                 <a className="dropdown-item" href="#">
                                     <span className="d-flex align-items-center align-middle">
                                         <i className="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                        <span className="flex-grow-1 align-middle">Billing</span>
+                                        <span className="flex-grow-1 align-middle">Abonnements</span>
                                         <span className="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                                     </span>
                                 </a>
@@ -89,10 +134,15 @@ export default function Header(): JSX.Element {
                                 <div className="dropdown-divider"></div>
                             </li>
                             <li>
-                                <a className="dropdown-item" href="auth-login-basic.html">
-                                    <i className="bx bx-power-off me-2"></i>
-                                    <span className="align-middle">Log Out</span>
-                                </a>
+                                {logoutBtnPressed ?
+                                    <button className="dropdown-item">
+                                        <CircularLoader color="black" mini={true} />
+                                        <span className="align-middle text-black"> En cours...</span>
+                                    </button> :
+                                    <button className="dropdown-item" onClick={logout}>
+                                        <i className="bx bx-power-off me-2 text-danger"></i>
+                                        <span className="align-middle text-danger">Se déconnecter</span>
+                                    </button>}
                             </li>
                         </ul>
                     </li>

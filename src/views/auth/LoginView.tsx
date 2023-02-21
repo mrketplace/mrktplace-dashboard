@@ -5,11 +5,14 @@ import User from "../../mrktplace-models/User";
 import Seller from "../../mrktplace-models/Seller";
 import CircularLoader from "../../components/CircularLoader";
 import Alert from "../../components/Alert";
+import AuthMiddleware from "../../middleware/AuthMiddleware";
+import Admin from "../../mrktplace-models/Admin";
 
 export default function LoginView(): JSX.Element {
+    AuthMiddleware.checkAuthState();
     // Properties
     const [email, setEmail] = useState("alexandretahi7@gmail.com");
-    const [password, setPassword] = useState("123456789");
+    const [password, setPassword] = useState("###@@@0110---///");
     const [remember, setRemember] = useState(false);
     const [loginBtnPressed, setLoginBtnPressed] = useState(false);
     const [errorHappens, setErrorHappens] = useState(false);
@@ -22,7 +25,6 @@ export default function LoginView(): JSX.Element {
         setErrorHappens(false);
         setErrorMsg("");
         const url = api.serverIp + api.auth.login;
-        console.log(url);
         // Send request
         await fetch(
             url,
@@ -43,9 +45,9 @@ export default function LoginView(): JSX.Element {
                 console.log(jsonData); //! debug
                 if (jsonData.state === "SUCCESS") {
                     // Store authenticated user datas
-                    User.authUser = new Seller(jsonData.user);
+                    User.authUser = (jsonData.user.role === "Admin") ? new Admin(jsonData.user, jsonData.token) : new Seller(jsonData.user, jsonData.token);
                     localStorage.setItem('authUser', JSON.stringify(User.authUser));
-                    window.location.replace('/home');
+                    window.location.replace('/');
                     console.log(User.authUser); //! debug
                 } else {
                     setErrorHappens(true);
@@ -55,7 +57,7 @@ export default function LoginView(): JSX.Element {
             }).catch(error => {
                 // Show error alert
                 setErrorHappens(true);
-                console.log("API ERROR" + error); //! debug
+                console.log("API ERROR -> " + error); //! debug
             });
         // Enable login button
         setLoginBtnPressed(false);
