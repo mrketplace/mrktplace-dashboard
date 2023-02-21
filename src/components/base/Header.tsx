@@ -19,7 +19,7 @@ export default function Header(): JSX.Element {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-                    'Authorization': 'Bearer ' + User.authUser!.token,
+                    'Authorization': 'Bearer ' + User.authUser?.token,
                 },
             })
             .then(response => response.json())
@@ -28,7 +28,7 @@ export default function Header(): JSX.Element {
                 console.log(jsonData); //! debug
                 if (jsonData.state === "SUCCESS") {
                     // Remove authenticated user datas
-                    // User.authUser!.logout();
+                    // User.authUser?.logout();
                     User.authUser = null;
                     localStorage.removeItem("authUser");
                     window.location.replace('/login');
@@ -63,8 +63,8 @@ export default function Header(): JSX.Element {
                         <input
                             type="text"
                             className="form-control border-0 shadow-none"
-                            placeholder="Search..."
-                            aria-label="Search..."
+                            placeholder="Rechercher..."
+                            aria-label="Rechercher..."
                         />
                     </div>
                 </div>
@@ -73,21 +73,16 @@ export default function Header(): JSX.Element {
                 <ul className="navbar-nav flex-row align-items-center ms-auto">
                     {/* <!-- Place this tag where you want the button to render. --> */}
                     <li className="nav-item lh-1 me-3">
-                        <a
-                            className="github-button"
-                            href="https://github.com/themeselection/sneat-html-admin-template-free"
-                            data-icon="octicon-star"
-                            data-size="large"
-                            data-show-count="true"
-                            aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                        >Star</a                  >
+                        <span className="fw-bold">
+                            {User.authUser?.firstname + " " + User.authUser?.lastname}
+                        </span>
                     </li>
 
                     {/* <!-- User --> */}
                     <li className="nav-item navbar-dropdown dropdown-user dropdown">
                         <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                             <div className="avatar avatar-online">
-                                <img src={process.env.PUBLIC_URL + '/template/assets/img/avatars/1.png'} alt="" className="w-px-40 h-auto rounded-circle" />
+                                <img src={process.env.PUBLIC_URL + '/template/assets/img/avatars/' + User.authUser?.gender + '.png'} alt="" className="w-px-40 h-auto rounded-circle" />
                             </div>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end">
@@ -96,12 +91,12 @@ export default function Header(): JSX.Element {
                                     <div className="d-flex">
                                         <div className="flex-shrink-0 me-3">
                                             <div className="avatar avatar-online">
-                                                <img src={process.env.PUBLIC_URL + '/template/assets/img/avatars/1.png'} alt="" className="w-px-40 h-auto rounded-circle" />
+                                                <img src={process.env.PUBLIC_URL + '/template/assets/img/avatars/' + User.authUser?.gender + '.png'} alt="" className="w-px-40 h-auto rounded-circle" />
                                             </div>
                                         </div>
                                         <div className="flex-grow-1">
-                                            <span className="fw-semibold d-block">{User.authUser!.firstname + " " + User.authUser!.lastname}</span>
-                                            <small className="text-muted">{User.authUser!.role}</small>
+                                            <span className="fw-semibold d-block">{User.authUser?.firstname + " " + User.authUser?.lastname}</span>
+                                            <small className="text-muted">{User.authUser?.role}</small>
                                         </div>
                                     </div>
                                 </a>
@@ -110,7 +105,7 @@ export default function Header(): JSX.Element {
                                 <div className="dropdown-divider"></div>
                             </li>
                             <li>
-                                <a className="dropdown-item" href="#">
+                                <a className="dropdown-item" href="/profile">
                                     <i className="bx bx-user me-2"></i>
                                     <span className="align-middle">Mon Profil</span>
                                 </a>
