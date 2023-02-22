@@ -10,6 +10,7 @@ import LoginView from './views/auth/LoginView';
 import AuthMiddleware from './middleware/AuthMiddleware';
 import User from './mrktplace-models/User';
 import ProfileView from './views/account/ProfileView';
+import ProductsView from './views/shop/ProductsView';
 
 console.log(User.authUser); //! debug
 // User.authUser = null; //! debug
@@ -27,6 +28,7 @@ root.render(
         {/* Dashboard routes */}
         <Route path="/" element={AuthMiddleware.privateRoute(<App />)}>
           <Route path="/" element={AuthMiddleware.privateRoute(<HomeView />)} />
+          <Route path="/products" element={AuthMiddleware.privateRoute(<ProductsView />)} />
           <Route path="/profile" element={AuthMiddleware.privateRoute(<ProfileView />)} />
         </Route>
         {/* No match route */}

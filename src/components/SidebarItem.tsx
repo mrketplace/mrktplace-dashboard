@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function SidebarItem(props: any) {
-    // Properties
-    const [sbClassName, setSbClassName] = useState('menu-item');
     // Methods
     const activeItem = (event: any) => {
         // Deactivate all sbItems

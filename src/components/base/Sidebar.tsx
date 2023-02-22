@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import SidebarItem from "../SidebarItem";
 
 export default function Sidebar(): JSX.Element {
@@ -79,7 +78,7 @@ export default function Sidebar(): JSX.Element {
         <li className="menu-header small text-uppercase">
           <span className="menu-header-text">Boutique</span>
         </li>
-        <SidebarItem path="/profile" icon="bx-cube-alt" name="Produits" />
+        <SidebarItem path="/products" icon="bx-cube-alt" name="Produits" />
         <SidebarItem path="/profile" icon="bx-gift" name="Promotions" />
 
         <li className="menu-item">
