@@ -2,6 +2,7 @@ import User from "../../mrktplace-models/User";
 import api from '../../mrktplace-models/api.json';
 import { useState } from "react";
 import CircularLoader from "../CircularLoader";
+import { Link } from "react-router-dom";
 
 export default function Header(): JSX.Element {
     // Properties
@@ -105,10 +106,10 @@ export default function Header(): JSX.Element {
                                 <div className="dropdown-divider"></div>
                             </li>
                             <li>
-                                <a className="dropdown-item" href="/profile">
+                                <Link className="dropdown-item" to="/profile">
                                     <i className="bx bx-user me-2"></i>
                                     <span className="align-middle">Mon Profil</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a className="dropdown-item" href="#">
