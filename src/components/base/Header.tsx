@@ -88,7 +88,7 @@ export default function Header(): JSX.Element {
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a className="dropdown-item" href="#">
+                                <Link className="dropdown-item" to="/profile">
                                     <div className="d-flex">
                                         <div className="flex-shrink-0 me-3">
                                             <div className="avatar avatar-online">
@@ -100,7 +100,7 @@ export default function Header(): JSX.Element {
                                             <small className="text-muted">{User.authUser?.role}</small>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <div className="dropdown-divider"></div>

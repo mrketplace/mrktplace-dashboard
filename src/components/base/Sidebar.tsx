@@ -77,7 +77,7 @@ export default function Sidebar(): JSX.Element {
           <span className="menu-header-text">Principal</span>
         </li>
         <SidebarItem path="/" icon="bx-bar-chart-alt-2" name="Tableau de bord" />
-        <SidebarItem path="/profile" icon="bx-store" name="Ma boutique" />
+        <SidebarItem path="/profile" icon="bx-store" name="Mes boutiques" />
         <SidebarItem path="/profile" icon="bx-bell" name="Notifications" />
         {/* <!-- Shop section --> */}
         <li className="menu-header small text-uppercase">

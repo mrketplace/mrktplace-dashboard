@@ -2,11 +2,9 @@ import { useState } from "react";
 import UpdateBtn from "../../components/UpdateBtn";
 import api from '../../mrktplace-models/api.json';
 import User from "../../mrktplace-models/User";
-import Seller from "../../mrktplace-models/Seller";
 import CircularLoader from "../../components/CircularLoader";
 import Alert from "../../components/Alert";
 import AuthMiddleware from "../../middleware/AuthMiddleware";
-import Admin from "../../mrktplace-models/Admin";
 
 export default function LoginView(): JSX.Element {
     AuthMiddleware.checkAuthState();
@@ -45,7 +43,7 @@ export default function LoginView(): JSX.Element {
                 console.log(jsonData); //! debug
                 if (jsonData.state === "SUCCESS") {
                     // Store authenticated user datas
-                    User.authUser = (jsonData.user.role === "Admin") ? new Admin(jsonData.user, jsonData.token) : new Seller(jsonData.user, jsonData.token);
+                    User.authUser = new User(jsonData.user, jsonData.token);
                     localStorage.setItem('authUser', JSON.stringify(User.authUser));
                     window.location.replace('/');
                     console.log(User.authUser); //! debug
