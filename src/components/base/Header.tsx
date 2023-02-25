@@ -27,7 +27,7 @@ export default function Header(): JSX.Element {
             .then(jsonData => {
                 // Check the response
                 console.log(jsonData); //! debug
-                if (jsonData.state === "SUCCESS") {
+                if (jsonData.state === "SUCCESS" || jsonData.state === "LOGOUT_FAILED") {
                     // Remove authenticated user datas
                     // User.authUser?.logout();
                     User.authUser = null;
@@ -97,7 +97,7 @@ export default function Header(): JSX.Element {
                                         </div>
                                         <div className="flex-grow-1">
                                             <span className="fw-semibold d-block">{User.authUser?.firstname + " " + User.authUser?.lastname}</span>
-                                            <small className="text-muted">{User.authUser?.role}</small>
+                                            <small className="text-muted">{User.authUser?.role?.name}</small>
                                         </div>
                                     </div>
                                 </Link>

@@ -74,11 +74,11 @@ export default function Sidebar(): JSX.Element {
       <ul className="menu-inner py-1">
         {/* <!-- Main section --> */}
         <li className="menu-header small text-uppercase">
-          <span className="menu-header-text">Principal</span>
+          <span className="menu-header-text">Board</span>
         </li>
         <SidebarItem path="/" icon="bx-bar-chart-alt-2" name="Tableau de bord" />
-        <SidebarItem path="/profile" icon="bx-store" name="Mes boutiques" />
-        <SidebarItem path="/profile" icon="bx-bell" name="Notifications" />
+        <SidebarItem path="/shops" icon="bx-store" name="Mes boutiques" />
+        <SidebarItem path="/notifications" icon="bx-bell" name="Notifications" />
         {/* <!-- Shop section --> */}
         <li className="menu-header small text-uppercase">
           <span className="menu-header-text">Boutique</span>

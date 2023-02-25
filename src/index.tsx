@@ -5,12 +5,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import NoMatchView from './views/NoMatchView';
-import HomeView from './views/HomeView';
+import HomeView from './views/board/HomeView';
+import MyShopsView from './views/board/MyShopsView';
 import LoginView from './views/auth/LoginView';
 import AuthMiddleware from './middleware/AuthMiddleware';
 import User from './mrktplace-models/User';
 import ProfileView from './views/account/ProfileView';
 import ProductsView from './views/shop/ProductsView';
+import NotifsView from './views/board/NotifsView';
 
 console.log(User.authUser); //! debug
 // User.authUser = null; //! debug
@@ -27,7 +29,11 @@ root.render(
         {/* <Route path="/reset-password" element={<ResetPasswordView />} /> */}
         {/* Dashboard routes */}
         <Route path="/" element={AuthMiddleware.privateRoute(<App />)}>
+          {/* Board */}
           <Route path="/" element={AuthMiddleware.privateRoute(<HomeView />)} />
+          <Route path="/shops" element={AuthMiddleware.privateRoute(<MyShopsView />)} />
+          <Route path="/notifications" element={AuthMiddleware.privateRoute(<NotifsView />)} />
+          {/* Shop */}
           <Route path="/products" element={AuthMiddleware.privateRoute(<ProductsView />)} />
           <Route path="/profile" element={AuthMiddleware.privateRoute(<ProfileView />)} />
         </Route>

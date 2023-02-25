@@ -9,7 +9,7 @@ import AuthMiddleware from "../../middleware/AuthMiddleware";
 export default function LoginView(): JSX.Element {
     AuthMiddleware.checkAuthState();
     // Properties
-    const [email, setEmail] = useState("alexandretahi7@gmail.com");
+    const [email, setEmail] = useState("yanndavidda@gmail.com");
     const [password, setPassword] = useState("###@@@0110---///");
     const [remember, setRemember] = useState(false);
     const [loginBtnPressed, setLoginBtnPressed] = useState(false);
