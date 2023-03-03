@@ -1,233 +1,51 @@
-export default function ProductsView(): JSX.Element {
+import { useEffect, useState } from "react";
+import CircularLoader from "../../components/CircularLoader";
+import ProductRow from "../../components/ProductRow";
+import ShopCard from "../../components/ShopCard";
+import api from "../../mrktplace-models/api.json";
+import Shop from "../../mrktplace-models/Shop";
+import User from "../../mrktplace-models/User";
+
+export default function ProductsView() {
+    // Properties
+    const [productRow, setProductRow] = useState([]);
+    const [loading, setLoading] = useState(false);
+    // Datas fecthing
+    const getDatas = () => {
+        setLoading(true);
+        fetch(
+            // Get products from user shops
+            api.serverIp + api.products.getBySeller.replace('{id}', User.authUser?.id.toString() || '0'),
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + User.authUser?.token,
+                },
+            })
+            .then(response => response.json())
+            .then(jsonData => {
+                const data: any = [];
+                jsonData.shops.forEach((shop: any, index: number) => {
+                    data.push(
+                        <ProductRow key={index} shop={new Shop(shop)} />
+                    );
+                });
+                setProductRow(data);
+            })
+            .catch(error => {
+                console.error("API ERROR -> " + error);
+            }).finally(() => setLoading(false));
+    };
+    useEffect(() => {
+        getDatas();
+    }, []);
     // Component rendering
     return (
         <div className="container-xxl flex-grow-1 container-p-y">
-            <h4 className="fw-bold py-3 mb-4"><span className="text-muted fw-light">Produits /</span> Tous les produits</h4>
-
-            <div className="card">
-                <h5 className="card-header">Liste de produits</h5>
-                <div className="table-responsive text-nowrap">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Project</th>
-                                <th>Client</th>
-                                <th>Users</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="table-border-bottom-0">
-                            <tr>
-                                <td><i className="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
-                                <td>Albert Cook</td>
-                                <td>
-                                    <ul className="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Lilian Fuller"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Sophia Wilkerson"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Christina Parker"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td><span className="badge bg-label-primary me-1">Active</span></td>
-                                <td>
-                                    <div className="dropdown">
-                                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i className="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div className="dropdown-menu">
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-edit-alt me-1"></i> Edit</a
-                                            >
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-trash me-1"></i> Delete</a
-                                            >
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i className="fab fa-react fa-lg text-info me-3"></i> <strong>React Project</strong></td>
-                                <td>Barry Hunter</td>
-                                <td>
-                                    <ul className="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Lilian Fuller"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Sophia Wilkerson"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Christina Parker"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td><span className="badge bg-label-success me-1">Completed</span></td>
-                                <td>
-                                    <div className="dropdown">
-                                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i className="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div className="dropdown-menu">
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-edit-alt me-1"></i> Edit</a
-                                            >
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-trash me-1"></i> Delete</a
-                                            >
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i className="fab fa-vuejs fa-lg text-success me-3"></i> <strong>VueJs Project</strong></td>
-                                <td>Trevor Baker</td>
-                                <td>
-                                    <ul className="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Lilian Fuller"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Sophia Wilkerson"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Christina Parker"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td><span className="badge bg-label-info me-1">Scheduled</span></td>
-                                <td>
-                                    <div className="dropdown">
-                                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i className="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div className="dropdown-menu">
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-edit-alt me-1"></i> Edit</a
-                                            >
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-trash me-1"></i> Delete</a
-                                            >
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i className="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Bootstrap Project</strong>
-                                </td>
-                                <td>Jerry Milton</td>
-                                <td>
-                                    <ul className="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Lilian Fuller"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Sophia Wilkerson"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                        <li
-                                            data-bs-toggle="tooltip"
-                                            data-popup="tooltip-custom"
-                                            data-bs-placement="top"
-                                            className="avatar avatar-xs pull-up"
-                                            title="Christina Parker"
-                                        >
-                                            <img src={process.env.PUBLIC_URL + "/template/assets/img/avatars/f.png"} alt="Avatar" className="rounded-circle" />
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td><span className="badge bg-label-warning me-1">Pending</span></td>
-                                <td>
-                                    <div className="dropdown">
-                                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                            <i className="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div className="dropdown-menu">
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-edit-alt me-1"></i> Edit</a
-                                            >
-                                            <a className="dropdown-item" href="javascript:void(0);"
-                                            ><i className="bx bx-trash me-1"></i> Delete</a
-                                            >
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <h4 className="fw-bold py-3 mb-4"><span className="text-muted fw-light">Boutiques /</span> Produits</h4>
+            {/* <h5 className="pb-1 mb-4">Images caps & overlay</h5> */}
+            {loading ? <CircularLoader /> : productRow}
         </div>
     );
 }
