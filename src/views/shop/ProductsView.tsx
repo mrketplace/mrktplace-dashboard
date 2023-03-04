@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CircularLoader from "../../components/CircularLoader";
-import ProductRow from "../../components/ProductRow";
+import ProductGroup from "../../components/ProductGroup";
 import ShopCard from "../../components/ShopCard";
 import api from "../../mrktplace-models/api.json";
 import Shop from "../../mrktplace-models/Shop";
@@ -8,7 +8,7 @@ import User from "../../mrktplace-models/User";
 
 export default function ProductsView() {
     // Properties
-    const [productRow, setProductRow] = useState([]);
+    const [productGroup, setProductGroup] = useState([]);
     const [loading, setLoading] = useState(false);
     // Datas fecthing
     const getDatas = () => {
@@ -28,10 +28,10 @@ export default function ProductsView() {
                 const data: any = [];
                 jsonData.shops.forEach((shop: any, index: number) => {
                     data.push(
-                        <ProductRow key={index} shop={new Shop(shop)} />
+                        <ProductGroup key={index} shop={new Shop(shop)} />
                     );
                 });
-                setProductRow(data);
+                setProductGroup(data);
             })
             .catch(error => {
                 console.error("API ERROR -> " + error);
@@ -45,7 +45,7 @@ export default function ProductsView() {
         <div className="container-xxl flex-grow-1 container-p-y">
             <h4 className="fw-bold py-3 mb-4"><span className="text-muted fw-light">Boutiques /</span> Produits</h4>
             {/* <h5 className="pb-1 mb-4">Images caps & overlay</h5> */}
-            {loading ? <CircularLoader /> : productRow}
+            {loading ? <CircularLoader /> : productGroup}
         </div>
     );
 }
