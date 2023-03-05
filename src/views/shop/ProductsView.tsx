@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CircularLoader from "../../components/CircularLoader";
 import ProductGroup from "../../components/ProductGroup";
 import ShopCard from "../../components/ShopCard";
+import ViewOptions from "../../components/ViewOptions";
 import api from "../../mrktplace-models/api.json";
 import Shop from "../../mrktplace-models/Shop";
 import User from "../../mrktplace-models/User";
@@ -43,7 +44,15 @@ export default function ProductsView() {
     // Component rendering
     return (
         <div className="container-xxl flex-grow-1 container-p-y">
-            <h4 className="fw-bold py-3 mb-4"><span className="text-muted fw-light">Boutiques /</span> Produits</h4>
+            <div className="row">
+                <div className="col-md-6">
+                    <h4 className="fw-bold py-3 mb-4">
+                        <span className="text-muted fw-light">Boutiques /</span> Produits
+                    </h4>
+                </div>
+            </div>
+            {/* View options */}
+            <ViewOptions />
             {/* <h5 className="pb-1 mb-4">Images caps & overlay</h5> */}
             {loading ? <CircularLoader /> : productGroup}
         </div>

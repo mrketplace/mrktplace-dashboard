@@ -1,0 +1,28 @@
+export default function ViewOptions(): JSX.Element {
+    // Component rendering
+    return (
+        <div className="col-12">
+            <div className="card mb-4">
+                <h5 className="card-header">Options</h5>
+                <div className="card-body">
+                    <div className="row gy-3">
+                        <div className="col-md-6 mt-0">
+                            {/* <small className="text-light fw-semibold">Basic</small> */}
+                            <div className="demo-inline-spacing">
+                                <button type="button" className="btn btn-secondary">
+                                    <span className="tf-icons bx bx-grid"></span>&nbsp; Grille
+                                </button>
+                                <button type="button" className="btn btn-secondary">
+                                    <span className="tf-icons bx bx-dock-top"></span>&nbsp; Tableau
+                                </button>
+                                <button type="button" className="btn btn-warning">
+                                    <span className="tf-icons bx bx-printer"></span>&nbsp; Imprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
