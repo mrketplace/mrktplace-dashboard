@@ -5,9 +5,21 @@ export default function ProductGroup(props: any) {
     // Data loading
     const products: JSX.Element[] = [];
     props.shop.products.forEach((product: any, index: number) => {
-        products.push(
-            <ProductCard key={index} product={new Product(product)} />
-        );
+        // Filter datas by with criteria
+        var matchCriteria: boolean = true;
+        if (props.searchCriterias.length !== 0) {
+            props.searchCriterias.forEach((criteria: any) => {
+                if (!product.name.toLowerCase().includes(criteria.toLowerCase())) {
+                    matchCriteria = false;
+                }
+            });
+        }
+        // Adding matching object to data array
+        if (matchCriteria) {
+            products.push(
+                <ProductCard key={index} product={new Product(product)} />
+            );
+        }
     });
     // Component rendering
     return (

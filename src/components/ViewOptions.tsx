@@ -1,15 +1,29 @@
-export default function ViewOptions(): JSX.Element {
+import { useState } from "react";
+
+// Props definition
+interface ViewOptionsProps {
+    onSearch: (searchValue: string) => void;
+}
+
+// Component definition
+export default function ViewOptions(props: ViewOptionsProps): JSX.Element {
+    // Properties
+    const [searchValue, setSearchValue] = useState("");
+    // Methods
+    const handleSearch = () => {
+        props.onSearch(searchValue);
+    };
     // Component rendering
     return (
         <div className="accordion mt-3 mb-5" id="accordionExample">
-            <div className="card accordion-item active">
+            <div className="card accordion-item">
                 <h2 className="accordion-header" id="headingOne">
-                    <button type="button" className="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
+                    <button type="button" className="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
                         Options
                     </button>
                 </h2>
 
-                <div id="accordionOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div id="accordionOne" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div className="accordion-body">
 
                         <div className="btn-toolbar demo-inline-spacing" role="toolbar" aria-label="Toolbar with button groups">
@@ -65,9 +79,24 @@ export default function ViewOptions(): JSX.Element {
                                 <div className="demo-vertical-spacing">
                                     <div className="btn-group" role="group" aria-label="First group">
                                         <div className="mb-3">
-                                            <input className="form-control custom-searchbar" type="search" placeholder="Ex: Nike Air Jordan 4" id="html5-search-input" />
+                                            <input
+                                                className="form-control custom-searchbar"
+                                                type="search"
+                                                placeholder="Ex: Nike Air Jordan 4"
+                                                id="html5-search-input"
+                                                value={searchValue}
+                                                onChange={(event) => setSearchValue(event.target.value)}
+                                                onKeyDown={(event) => {
+                                                    if (event.key === 'Enter') {
+                                                        handleSearch();
+                                                    }
+                                                }}
+                                            />
                                         </div>
-                                        <button type="button" className="btn btn-icon btn-secondary custom-searchbar-btn">
+                                        <button
+                                            className="btn btn-icon btn-secondary custom-searchbar-btn"
+                                            type="button"
+                                            onClick={handleSearch} >
                                             <span className="tf-icons bx bx-search"></span>
                                         </button>
                                     </div>

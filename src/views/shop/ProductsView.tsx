@@ -12,7 +12,7 @@ export default function ProductsView() {
     const [productGroup, setProductGroup] = useState([]);
     const [loading, setLoading] = useState(false);
     // Datas fecthing
-    const getDatas = () => {
+    const getDatas = (searchCriterias: string[]) => {
         setLoading(true);
         fetch(
             // Get products from user shops
@@ -26,10 +26,12 @@ export default function ProductsView() {
             })
             .then(response => response.json())
             .then(jsonData => {
+                console.log("Server has understand: " + jsonData.searchCriterias);
                 const data: any = [];
-                jsonData.shops.forEach((shop: any, index: number) => {
+                // TODO later: Optimize data fetching
+                jsonData.shops.forEach((shopJson: any, index: number) => {
                     data.push(
-                        <ProductGroup key={index} shop={new Shop(shop)} />
+                        <ProductGroup key={index} shop={new Shop(shopJson)} searchCriterias={searchCriterias} />
                     );
                 });
                 setProductGroup(data);
@@ -39,8 +41,14 @@ export default function ProductsView() {
             }).finally(() => setLoading(false));
     };
     useEffect(() => {
-        getDatas();
+        getDatas([]);
     }, []);
+    // Methods
+    const handleSearch = (searchValue: string) => {
+        const dispatchedSearchValue: string[] = searchValue.split(' ');
+        console.log("Product searched -> " + dispatchedSearchValue);
+        getDatas(dispatchedSearchValue);
+    };
     // Component rendering
     return (
         <div className="container-xxl flex-grow-1 container-p-y">
@@ -52,8 +60,7 @@ export default function ProductsView() {
                 </div>
             </div>
             {/* View options */}
-            <ViewOptions />
-            {/* <h5 className="pb-1 mb-4">Images caps & overlay</h5> */}
+            <ViewOptions onSearch={handleSearch} />
             {loading ? <CircularLoader /> : productGroup}
         </div>
     );
