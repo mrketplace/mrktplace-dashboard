@@ -2,8 +2,7 @@
 interface AlertModalProps {
     modalId: string;
     title: string;
-    content?: string;
-    additionalComponent?: JSX.Element;
+    content?: JSX.Element;
     buttons?: JSX.Element[];
 }
 
@@ -24,7 +23,6 @@ export default function AlertModal(props: AlertModalProps): JSX.Element {
                         ></button>
                     </div>
                     <div className="modal-body">
-                        {props.additionalComponent}
                         {props.content}
                     </div>
                     <div className="modal-footer">

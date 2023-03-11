@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CircularLoader from "../../components/CircularLoader";
 import ProductGroup from "../../components/ProductGroup";
 import ShopCard from "../../components/ShopCard";
+import Toast from "../../components/Toast";
 import ViewOptions from "../../components/ViewOptions";
 import api from "../../mrktplace-models/api.json";
 import Shop from "../../mrktplace-models/Shop";
@@ -26,7 +27,6 @@ export default function ProductsView() {
             })
             .then(response => response.json())
             .then(jsonData => {
-                console.log("Server has understand: " + jsonData.searchCriterias);
                 const data: any = [];
                 // TODO later: Optimize data fetching
                 jsonData.shops.forEach((shopJson: any, index: number) => {
@@ -59,6 +59,8 @@ export default function ProductsView() {
                     </h4>
                 </div>
             </div>
+            {/* Toast space */}
+            <div id="productViewToast"></div>
             {/* View options */}
             <ViewOptions onSearch={handleSearch} />
             {loading ? <CircularLoader /> : productGroup}
