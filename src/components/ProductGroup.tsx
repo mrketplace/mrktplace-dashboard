@@ -24,7 +24,7 @@ export default function ProductGroup(props: any) {
     // Component rendering
     return (
         <>
-            <h5 className="pb-1 mb-4">{props.shop.name}</h5>
+            <h5 className="pb-1 mb-4">{props.shop.name} ({props.shop.products.length} produits)</h5>
             <div className="row row-cols-1 row-cols-md-3 g-4 mb-5">
                 {products}
             </div>

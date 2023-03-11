@@ -71,3 +71,8 @@ code {
 .custom-searchbar-btn {
   box-shadow: none;
 }
+
+.custom-card-img-left {
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,6 +1,7 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import Image from "../mrktplace-models/Image";
+import AlertModal from "./AlertModal";
 
 export default function ProductModal(props: any) {
     // Properties
@@ -15,11 +16,11 @@ export default function ProductModal(props: any) {
     });
     // Component rendering
     return (
-        <div className="modal fade" id={"productModal" + props.product.id} tabIndex={-1} aria-hidden="true">
+        <div className="modal fade" id={"productModal" + props.product.id} aria-labelledby={"productModalLabel" + props.product.id} tabIndex={-1} aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel1">Détails du produit</h5>
+                        <h5 className="modal-title" id={"productModalLabel" + props.product.id}>Détails du produit</h5>
                         <button
                             type="button"
                             className="btn-close"
@@ -61,8 +62,9 @@ export default function ProductModal(props: any) {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Fermer
+                        {/* TODO: Add more options like Approvisionnement, Déstockage, etc. */}
+                        <button className="btn btn-outline-danger" data-bs-target={"#deleteProduct" + props.product.id} data-bs-toggle="modal" data-bs-dismiss="modal" >
+                            Retirer le produit
                         </button>
                         <button type="button" className="btn btn-primary">Enregistrer</button>
                     </div>
