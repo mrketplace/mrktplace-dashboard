@@ -1,7 +1,7 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import Image from "../mrktplace-models/Image";
-import AlertModal from "./AlertModal";
+import * as bootstrap from "bootstrap";
 
 export default function ProductModal(props: any) {
     // Properties
@@ -63,7 +63,13 @@ export default function ProductModal(props: any) {
                     </div>
                     <div className="modal-footer">
                         {/* TODO: Add more options like Approvisionnement, Déstockage, etc. */}
-                        <button className="btn btn-outline-danger" data-bs-target={"#deleteProduct" + props.product.id} data-bs-toggle="modal" data-bs-dismiss="modal" >
+                        <button
+                            className="btn btn-outline-danger"
+                            data-bs-dismiss="modal"
+                            onClick={() => {
+                                const deleteProductModal = new bootstrap.Modal(document.getElementById("deleteProduct" + props.product.id) as HTMLElement);
+                                deleteProductModal.show();
+                            }}>
                             Retirer le produit
                         </button>
                         <button type="button" className="btn btn-primary">Enregistrer</button>

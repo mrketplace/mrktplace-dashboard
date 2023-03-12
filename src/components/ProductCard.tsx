@@ -6,6 +6,7 @@ import api from "../mrktplace-models/api.json";
 import User from "../mrktplace-models/User";
 import CircularLoader from "./CircularLoader";
 import ToastMiddleware from "../middleware/ToastMiddleware";
+import * as bootstrap from "bootstrap";
 
 // Props definition
 interface ProductCardProps {
@@ -17,7 +18,9 @@ export default function ProductCard(props: ProductCardProps) {
     // Properties
     const [loading, setLoading] = useState(false);
     // Methods
-    const deleteProduct = () => {
+    const deleteProduct = (event:any) => {
+        // Configs
+        event.preventDefault();
         setLoading(true);
         fetch(
             api.serverIp + api.products.delete.replace('{id}', props.product.id.toString()),
@@ -39,7 +42,12 @@ export default function ProductCard(props: ProductCardProps) {
             .catch(error => {
                 console.error("API ERROR -> " + error);
                 ToastMiddleware.create("productViewToast", "Erreur", error, "bg-danger");
-            }).finally(() => setLoading(false));
+            }).finally(() => {
+                setLoading(false);
+                // TODO Fix hidding modal issue
+                const deleteProductModal = new bootstrap.Modal(document.getElementById("deleteProduct" + props.product.id) as HTMLElement);
+                deleteProductModal.hide();
+            });
     };
     // Component rendering
     return (
@@ -59,8 +67,16 @@ export default function ProductCard(props: ProductCardProps) {
                 modalId={"deleteProduct" + props.product.id}
                 title="Retirer le produit ?"
                 buttons={[
-                    <button type="button" className="btn btn-outline-secondary" data-bs-target={"#productModal" + props.product.id} data-bs-toggle="modal" data-bs-dismiss="modal" >Conserver </button>,
-                    <button type="button" className="btn btn-danger" onClick={deleteProduct}>Retirer</button>
+                    <button
+                        className="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                        onClick={() => {
+                            const productModal = new bootstrap.Modal(document.getElementById("productModal" + props.product.id) as HTMLElement);
+                            productModal.show();
+                        }} >
+                        Conserver
+                    </button>,
+                    <button type="button" className="btn btn-danger" onClick={deleteProduct} >Retirer</button>
                 ]}
                 content={
                     loading ?
